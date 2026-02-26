@@ -82,13 +82,9 @@ Para utilizar em um sistema ativo (como um bot diário):
 
 Por favor, leia o [COLABORACAO.md](https://www.google.com/search?q=https://github.com/seu-usuario/projeto/blob/main/COLABORACAO.md) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de *pull request*.
 
-## 📌 Versão
-
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://www.google.com/search?q=https://github.com/seu-usuario/graham-scanner-b3/tags).
-
 ## ✒️ Autores
 
-* **Seu Nome** - *Desenvolvimento e Idealização* - [seu-github](https://www.google.com/search?q=https://github.com/seu-usuario)
+* **Erick Queiroz** - *Desenvolvimento e Idealização* - ([https://www.google.com/search?q=https://github.com/seu-usuario](https://github.com/erickqueirozfs))
 
 ## 📄 Licença
 
