@@ -195,6 +195,7 @@ formato_porcentagem = workbook.add_format({'num_format': '0.00%'}) # type:ignore
 
 #Aplicando o formato nas colunas específicas
 # set_column(coluna_inicio, coluna_fim, largura, formato)
-worksheet.set_column('F:G', 12, formato_porcentagem)
+worksheet.set_column('F:G', 12, formato_porcentagem)#type:ignore
+worksheet.set_column('I:I', 12, formato_porcentagem)#type:ignore
 
 writer.close()
