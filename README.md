@@ -84,7 +84,7 @@ Por favor, leia o [COLABORACAO.md](https://www.google.com/search?q=https://githu
 
 ## ✒️ Autores
 
-* **Erick Queiroz** - *Desenvolvimento e Idealização* - ([https://www.google.com/search?q=https://github.com/seu-usuario](https://github.com/erickqueirozfs))
+* **Erick Queiroz** - *Desenvolvimento e Idealização* - ([https://github.com/erickqueirozfs](https://github.com/erickqueirozfs))
 
 ## 📄 Licença
 
