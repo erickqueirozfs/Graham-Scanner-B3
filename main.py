@@ -21,6 +21,7 @@ Opcionais, mas vou colocar só para deixar melhor a ánalise:
 # 3- WEB Scraping em algum site de investimento que nem Investidor10
 import math
 import os
+import time
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -39,6 +40,8 @@ acoes = utils.listar_ativos_brasileiros(token)
 
 dados_acoes = []
 for acao in acoes:
+    # dando um tempinho para não travar ou recebermos um bloqueio do site
+    time.sleep(5)
     # buscando indicadores da ação
     indicadores = utils.buscar_indicadores(acao)
 

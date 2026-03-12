@@ -1,8 +1,7 @@
 import re
-from datetime import datetime, timedelta
 
 import requests
-import yfinance as yf
+from bs4 import BeautifulSoup
 
 
 def validar_codigo(ativo):
@@ -42,58 +41,69 @@ def buscar_indicadores(ticker_name: str) -> dict:
         'VPA (Valor Patrimonial por Acao)': 32.427,
         'P/VP': 0.7842231,
         'ROE': 0.08884,
-        'DY (Dividend Yield)': 0.72
+        'DY (Dividend Yield)': 0.0579
         }
     """
+    # Vou fazer Web Scraping para pegar as informações das ações
+    url = f"https://investidor10.com.br/acoes/{ticker_name}"
 
-    def calcular_dy_real():
-        """
-        Pegar porcentagem dividendo distribuido nos últimos 12 meses.
+    header = {
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    }
 
-        Returns:
-            float: DY em porcentagem dos ultimos 12 meses
+    response = requests.get(url, headers=header)
 
-        Exemplos:
-            >>> buscar_indicadores("BBAS3")
-            8.958265726043503
-        """
-        # Pega os dividendos históricos
-        proventos = ticker.dividends
+    bs = BeautifulSoup(response.text, "html.parser")
 
-        # Filtra apenas os últimos 12 meses
-        uma_ano_atras = datetime.now() - timedelta(days=365)
-        # Garante que o índice (data) não tenha fuso horario
-        proventos.index = proventos.index.tz_localize(None)  # type:ignore
+    info = {
+        "cotacao": None,
+        "lpa": None,
+        "vpa": None,
+        "p/vp": None,
+        "roe": None,
+        "dividend yield": None,
+    }
+    indicadores = bs.find_all("div", class_="cell")
 
-        ultimos_12_meses = proventos[proventos.index >= uma_ano_atras]
-        total_dividendos = ultimos_12_meses.sum()
+    for indicador in indicadores:
+        try:
+            nome_indicador = (
+                indicador.find(
+                    "span", class_="d-flex justify-content-between align-items-center"
+                )
+                .text.strip()
+                .lower()
+            )
+        except AttributeError:
+            continue
+        for key in info.keys():
+            if key in nome_indicador:
+                info[key] = float(
+                    indicador.find("div", class_="value")
+                    .text.strip()
+                    .replace(",", ".")
+                    .replace("%", "")
+                )
 
-        # Pega o preço atual do ativo
-        preco_atual = ticker.info.get("currentPrice")
-
-        if preco_atual and total_dividendos > 0:
-            dy_real = (total_dividendos / preco_atual) * 100
-            return dy_real
-        else:
-            return 0.0
-
-    # Adiciona .SA se não tiver
-    ticker = (
-        yf.Ticker(f"{ticker_name}.SA")
-        if not ticker_name.lower().endswith(".sa")
-        else yf.Ticker(ticker_name)
+    cotacao = (
+        (bs.find("span", class_="value").text)
+        .replace("R$", "")
+        .replace(",", ".")
+        .strip()
     )
-    info = ticker.info
+
+    info["cotacao"] = float(cotacao)
 
     # Extração dos dados
     dados = {
         "Ticker": ticker_name,
-        "CotacaoAtual": info.get("currentPrice"),
-        "LPA (Lucro por Acao)": info.get("trailingEps"),
-        "VPA (Valor Patrimonial por Acao)": info.get("bookValue"),
-        "P/VP": info.get("priceToBook"),
-        "ROE": info.get("returnOnEquity"),
-        "DY (Dividend Yield)": calcular_dy_real() / 100,
+        "CotacaoAtual": info.get("cotacao"),
+        "LPA (Lucro por Acao)": info.get("lpa"),
+        "VPA (Valor Patrimonial por Acao)": info.get("vpa"),
+        "P/VP": info.get("p/vp"),
+        "ROE": info.get("roe") / 100,
+        "DY (Dividend Yield)": info.get("dividend yield") / 100,
     }
     return dados
 
