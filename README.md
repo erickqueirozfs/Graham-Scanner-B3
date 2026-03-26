@@ -13,23 +13,24 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 
 Para rodar este script, você precisará de:
 
-* **Python 3.8** ou superior.
-* Uma chave de API (Token) da **Brapi** (obtenha gratuitamente em [brapi.dev](https://brapi.dev/)).
-* Uma IDE de sua preferência (VS Code, PyCharm, etc.).
+- **Python 3.8** ou superior.
+- Uma chave de API (Token) da **Brapi** (obtenha gratuitamente em [brapi.dev](https://brapi.dev/)).
+- Uma IDE de sua preferência (VS Code, PyCharm, etc.).
 
 ### 🔧 Instalação
 
 Siga o passo a passo para configurar o ambiente:
 
 1. **Clone o repositório:**
+
 ```bash
 git clone https://github.com/erickqueirozfs/Graham-Scanner-B3.git
 cd Graham-Scanner-B3
 
 ```
 
-
 2. **Crie um ambiente virtual (opcional, mas recomendado):**
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # No Linux/Mac
@@ -37,28 +38,26 @@ venv\Scripts\activate     # No Windows
 
 ```
 
-
 3. **Instale as dependências:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-
 4. **Configure suas variáveis de ambiente:**
-Crie um arquivo `.env` na raiz do projeto e adicione seu token da Brapi:
+   Crie um arquivo `.env` na raiz do projeto e adicione seu token da Brapi:
+
 ```env
 TOKEN_BRAPI=seu_token_aqui
 
 ```
 
-
 5. **Execute o script:**
+
 ```bash
 python main.py
 
 ```
-
-
 
 Ao finalizar, um arquivo chamado `AcoesBaratasSegundoMTDGraham.xlsx` será gerado na pasta do projeto.
 
@@ -72,19 +71,19 @@ Para utilizar em um sistema ativo (como um bot diário):
 
 ## 🛠️ Construído com
 
-* [Python](https://www.python.org/) - Linguagem base.
-* [yfinance](https://aroussi.com/post/python-yahoo-finance) - Coleta de dados históricos e fundamentalistas.
-* [Brapi](https://brapi.dev/) - Listagem de ativos atualizados da B3.
-* [Pandas](https://pandas.pydata.org/) - Manipulação e análise de dados.
-* [XlsxWriter](https://xlsxwriter.readthedocs.io/) - Formatação e geração do relatório Excel.
+- [Python](https://www.python.org/) - Linguagem base.
+- [requests](https://requests.readthedocs.io/en/latest/) - Coleta de dados históricos e fundamentalistas.
+- [Brapi](https://brapi.dev/) - Listagem de ativos atualizados da B3.
+- [Pandas](https://pandas.pydata.org/) - Manipulação e análise de dados.
+- [XlsxWriter](https://xlsxwriter.readthedocs.io/) - Formatação e geração do relatório Excel.
 
 ## 🖇️ Colaborando
 
-Por favor, leia o [COLABORACAO.md](https://www.google.com/search?q=https://github.com/seu-usuario/projeto/blob/main/COLABORACAO.md) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de *pull request*.
+Por favor, leia o [COLABORACAO.md](https://www.google.com/search?q=https://github.com/seu-usuario/projeto/blob/main/COLABORACAO.md) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de _pull request_.
 
 ## ✒️ Autores
 
-* **Erick Queiroz** - *Desenvolvimento e Idealização* - ([https://github.com/erickqueirozfs](https://github.com/erickqueirozfs))
+- **Erick Queiroz** - _Desenvolvimento e Idealização_ - ([https://github.com/erickqueirozfs](https://github.com/erickqueirozfs))
 
 ## 📄 Licença
 
@@ -92,9 +91,9 @@ Este projeto está sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) 
 
 ## 🎁 Expressões de gratidão
 
-* Compartilhe este projeto com outros investidores que buscam automação 📢;
-* Contribua com melhorias no código (filtros de dívida, ROE, etc.) 🫂;
-* Fique à vontade para abrir uma *Issue* se encontrar algum erro 🐛;
+- Compartilhe este projeto com outros investidores que buscam automação 📢;
+- Contribua com melhorias no código (filtros de dívida, ROE, etc.) 🫂;
+- Fique à vontade para abrir uma _Issue_ se encontrar algum erro 🐛;
 
 ---
 
