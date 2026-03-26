@@ -45,31 +45,23 @@ for acao in acoes:
     # buscando indicadores da ação
     indicadores = utils.buscar_indicadores(acao)
 
-    try:
-        lpa = (
-            0
-            if float(indicadores["LPA (Lucro por Acao)"]) < 0
-            else float(indicadores["LPA (Lucro por Acao)"])
-        )
-    except TypeError:
-        lpa = 0
-    try:
-        vpa = (
-            0
-            if float(indicadores["VPA (Valor Patrimonial por Acao)"]) < 0
-            else float(indicadores["VPA (Valor Patrimonial por Acao)"])
-        )
-    except TypeError:
-        vpa = 0
+    lpa = indicadores["LPA (Lucro por Acao)"]
+
+    vpa = indicadores["VPA (Valor Patrimonial por Acao)"]
 
     # calculo de Graham
-    valor_intriseco = math.sqrt(22.5 * lpa * vpa)
+    valor_intriseco = math.sqrt(0.0 if (22.5 * lpa * vpa) < 0.0 else (22.5 * lpa * vpa))
 
     indicadores["ValorIntriseco"] = valor_intriseco
     # Calculo da margem de segurança
     indicadores["MargemSeguranca"] = (
-        valor_intriseco - indicadores["CotacaoAtual"]
-    ) / indicadores["CotacaoAtual"]
+        0
+        if valor_intriseco == 0
+        else (
+            (valor_intriseco - indicadores["CotacaoAtual"])
+            / indicadores["CotacaoAtual"]
+        )
+    )
 
     dados_acoes.append(indicadores)
 

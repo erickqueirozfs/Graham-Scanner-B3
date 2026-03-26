@@ -55,45 +55,50 @@ def buscar_indicadores(ticker_name: str) -> dict:
     response = requests.get(url, headers=header)
 
     bs = BeautifulSoup(response.text, "html.parser")
+    # print(bs.prettify())
 
     info = {
-        "cotacao": None,
-        "lpa": None,
-        "vpa": None,
-        "p/vp": None,
-        "roe": None,
-        "dividend yield": None,
+        "cotacao": 0,
+        "lpa": 0,
+        "vpa": 0,
+        "p/vp": 0,
+        "roe": 0,
+        "dividend yield": 0,
     }
     indicadores = bs.find_all("div", class_="cell")
-
-    for indicador in indicadores:
-        try:
-            nome_indicador = (
-                indicador.find(
-                    "span", class_="d-flex justify-content-between align-items-center"
-                )
-                .text.strip()
-                .lower()
-            )
-        except AttributeError:
-            continue
-        for key in info.keys():
-            if key in nome_indicador:
-                info[key] = float(
-                    indicador.find("div", class_="value")
+    if not len(indicadores) == 0:
+        for indicador in indicadores:
+            try:
+                nome_indicador = (
+                    indicador.find(
+                        "span",
+                        class_="d-flex justify-content-between align-items-center",
+                    )
                     .text.strip()
-                    .replace(",", ".")
-                    .replace("%", "")
+                    .lower()
                 )
+            except AttributeError:
+                continue
+            for key in info.keys():
+                if key in nome_indicador:
+                    info[key] = float(
+                        indicador.find("div", class_="value")
+                        .text.strip()
+                        .replace(".", "")
+                        .replace(",", ".")
+                        .replace("%", "")
+                    )
 
-    cotacao = (
-        (bs.find("span", class_="value").text)
-        .replace("R$", "")
-        .replace(",", ".")
-        .strip()
-    )
+        cotacao = (
+            (bs.find("span", class_="value").text)
+            .replace("R$", "")
+            .replace(",", ".")
+            .strip()
+        )
 
-    info["cotacao"] = float(cotacao)
+        info["cotacao"] = float(cotacao)
+        info["roe"] = info["roe"] / 100
+        info["dividend yield"] = info["dividend yield"] / 100
 
     # Extração dos dados
     dados = {
@@ -102,8 +107,8 @@ def buscar_indicadores(ticker_name: str) -> dict:
         "LPA (Lucro por Acao)": info.get("lpa"),
         "VPA (Valor Patrimonial por Acao)": info.get("vpa"),
         "P/VP": info.get("p/vp"),
-        "ROE": info.get("roe") / 100,
-        "DY (Dividend Yield)": info.get("dividend yield") / 100,
+        "ROE": info.get("roe"),
+        "DY (Dividend Yield)": info.get("dividend yield"),
     }
     return dados
 
