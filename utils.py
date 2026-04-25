@@ -127,17 +127,22 @@ def listar_ativos_brasileiros(token_brapi: str) -> list:
         >>> listar_ativos_brasileiros("seu_token")
         ["BBAS3","VALE3","GOAU3","GOAU4","SAPR3","CMIG3","CMIG4",...]
     """
-    url = f"https://brapi.dev/api/quote/list?token={token_brapi}"
+    # endpoint retorna apenas a lista de nomes dos ativos
+    url = f"https://brapi.dev/api/available?token={token_brapi}"
 
-    response = requests.get(url)
-    data = response.json()
+    try:
+        response = requests.get(url)
+        data = response.json()
 
-    contagem = 0
-    empresas = []
-    # Exibir os tickers das ações
-    for stock in data["stocks"]:
-        if validar_codigo(stock["stock"]):
-            empresas.append(stock["stock"])
-            contagem += 1
+        todos_ativos = data.get("stocks", [])
 
-    return empresas
+        empresas = [ticker for ticker in todos_ativos if validar_codigo(ticker)]
+
+        print(f"Total de ativos processados: {len(todos_ativos)}")
+        print(f"Total que passou na validação: {len(empresas)}")
+
+        return empresas
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return []
